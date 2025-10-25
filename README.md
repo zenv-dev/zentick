@@ -2,7 +2,7 @@
 
 A minimal Pomodoro timer that keeps running even when you switch tabs.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://zentick.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://zentick-timer.vercel.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 ## ✨ Features
@@ -13,7 +13,7 @@ A minimal Pomodoro timer that keeps running even when you switch tabs.
 - 🌓 Theme toggle (light/dark/system)
 - 🔄 **Background-safe** — continues running in hidden tabs
 
-## 🚀 [Try it live →](https://zentick.vercel.app)
+## 🚀 [Try it live →](https://zentick-timer.vercel.app/)
 
 ![Screenshot](./public/screenshot.png)
 

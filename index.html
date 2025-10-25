@@ -5,6 +5,28 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>zentick - pomodoro timer</title>
+    <script>
+      // FOUC (Flash of Unstyled Content) prevention
+      // Apply theme class before first paint to avoid theme flash
+      // This script runs synchronously before the page renders
+      (function () {
+        const storageKey = 'zentick-theme'
+        const theme = localStorage.getItem(storageKey) || 'system'
+
+        // Determine effective theme
+        let isDark = false
+        if (theme === 'dark') {
+          isDark = true
+        } else if (theme === 'system') {
+          isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        // Apply dark class immediately if needed
+        if (isDark) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

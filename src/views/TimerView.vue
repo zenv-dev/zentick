@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useTimerNotification } from '@/composables/useTimerNotification'
 import { useRobustTimer } from '@/composables/useRobustTimer'
+import ThemeToggle from '@/components/ThemeToggle.vue'
 
 // Constants
 const TIMER_DURATION_MINUTES = 30
@@ -37,7 +38,12 @@ const startButtonAction = computed(() => {
 </script>
 
 <template>
-  <main class="flex min-h-screen items-center justify-center">
+  <main class="flex min-h-screen flex-col items-center justify-center gap-8">
+    <!-- Theme Toggle -->
+    <div class="absolute right-6 top-6">
+      <ThemeToggle />
+    </div>
+
     <div class="flex flex-col items-center gap-8 p-6">
       <!-- Timer display -->
       <div class="text-8xl font-bold tabular-nums">

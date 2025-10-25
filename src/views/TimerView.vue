@@ -7,6 +7,7 @@ const TIMER_DURATION_MS = 30 * 60 * 1000 // 30 minutes
 // Local state
 const remainingMs = ref(TIMER_DURATION_MS)
 const isRunning = ref(false)
+const isPaused = ref(false)
 let intervalId: number | null = null
 
 // Computed
@@ -17,11 +18,22 @@ const formattedTime = computed(() => {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 })
 
+const startButtonText = computed(() => {
+  if (isRunning.value) return 'Pause'
+  if (isPaused.value) return 'Resume'
+  return 'Start'
+})
+
+const startButtonAction = computed(() => {
+  return isRunning.value ? pause : start
+})
+
 // Methods
 function start() {
   if (isRunning.value) return
 
   isRunning.value = true
+  isPaused.value = false
   intervalId = window.setInterval(() => {
     remainingMs.value -= 1000
 
@@ -32,12 +44,22 @@ function start() {
   }, 1000)
 }
 
+function pause() {
+  if (intervalId) {
+    clearInterval(intervalId)
+    intervalId = null
+  }
+  isRunning.value = false
+  isPaused.value = true
+}
+
 function stop() {
   if (intervalId) {
     clearInterval(intervalId)
     intervalId = null
   }
   isRunning.value = false
+  isPaused.value = false
   remainingMs.value = TIMER_DURATION_MS
 }
 
@@ -58,16 +80,16 @@ onUnmounted(() => {
       <!-- Controls -->
       <div class="flex gap-4">
         <button
-          @click="start"
-          :disabled="isRunning"
+          @click="startButtonAction"
+          :disabled="remainingMs <= 0"
           class="rounded-lg bg-gray-900 px-8 py-3 text-lg font-semibold text-white transition hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
         >
-          Start
+          {{ startButtonText }}
         </button>
 
         <button
           @click="stop"
-          :disabled="!isRunning"
+          :disabled="!isRunning && !isPaused"
           class="rounded-lg border-2 border-gray-300 bg-white px-8 py-3 text-lg font-semibold text-gray-900 transition hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-900"
         >
           Stop

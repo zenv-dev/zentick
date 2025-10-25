@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
+import { useTimerNotification } from '@/composables/useTimerNotification'
 
 // Constants
-const TIMER_DURATION_MS = 30 * 60 * 1000 // 30 minutes
+const TIMER_DURATION_MINUTES = 30
+const TIMER_DURATION_MS = TIMER_DURATION_MINUTES * 60 * 1000 // 30 minutes
+
+// Composables
+const { playNotification } = useTimerNotification()
 
 // Local state
 const remainingMs = ref(TIMER_DURATION_MS)
@@ -38,6 +43,7 @@ function start() {
     remainingMs.value -= 1000
 
     if (remainingMs.value <= 0) {
+      playNotification()
       stop()
       remainingMs.value = 0
     }

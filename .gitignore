@@ -29,3 +29,8 @@ coverage
 
 # Claude
 CLAUDE.md
+
+# Environment variables
+.env
+.env.local
+.env.*.local

@@ -1,8 +1,18 @@
 {
   "name": "zentick",
   "version": "0.1.0",
+  "description": "A minimalist Pomodoro timer built with Vue 3 and TypeScript",
+  "author": "Vladyslav Dariev <zenv.dev@gmail.com>",
   "private": true,
   "type": "module",
+  "homepage": "https://github.com/zenv-dev/zentick#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zenv-dev/zentick.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zenv-dev/zentick/issues"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -23,5 +33,14 @@
     "typescript": "~5.9.3",
     "vite": "^7.1.12",
     "vue-tsc": "^3.1.2"
-  }
+  },
+  "license": "MIT",
+  "keywords": [
+    "pomodoro",
+    "timer",
+    "productivity",
+    "vue3",
+    "typescript",
+    "tailwindcss"
+  ]
 }

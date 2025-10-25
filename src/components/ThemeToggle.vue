@@ -33,9 +33,4 @@ const handleThemeChange = (mode: ThemeMode) => {
       <span>{{ option.label }}</span>
     </button>
   </div>
-
-  <!-- Visual indicator of effective theme -->
-  <div class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">
-    Currently: {{ effectiveTheme }}
-  </div>
 </template>

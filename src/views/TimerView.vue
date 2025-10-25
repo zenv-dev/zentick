@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue'
+import { computed } from 'vue'
 import { useTimerNotification } from '@/composables/useTimerNotification'
+import { useRobustTimer } from '@/composables/useRobustTimer'
 
 // Constants
 const TIMER_DURATION_MINUTES = 30
@@ -9,11 +10,12 @@ const TIMER_DURATION_MS = TIMER_DURATION_MINUTES * 60 * 1000 // 30 minutes
 // Composables
 const { playNotification } = useTimerNotification()
 
-// Local state
-const remainingMs = ref(TIMER_DURATION_MS)
-const isRunning = ref(false)
-const isPaused = ref(false)
-let intervalId: number | null = null
+const { remainingMs, isRunning, isPaused, start, pause, stop } = useRobustTimer({
+  durationMs: TIMER_DURATION_MS,
+  onComplete: () => {
+    playNotification()
+  }
+})
 
 // Computed
 const formattedTime = computed(() => {
@@ -31,47 +33,6 @@ const startButtonText = computed(() => {
 
 const startButtonAction = computed(() => {
   return isRunning.value ? pause : start
-})
-
-// Methods
-function start() {
-  if (isRunning.value) return
-
-  isRunning.value = true
-  isPaused.value = false
-  intervalId = window.setInterval(() => {
-    remainingMs.value -= 1000
-
-    if (remainingMs.value <= 0) {
-      playNotification()
-      stop()
-      remainingMs.value = 0
-    }
-  }, 1000)
-}
-
-function pause() {
-  if (intervalId) {
-    clearInterval(intervalId)
-    intervalId = null
-  }
-  isRunning.value = false
-  isPaused.value = true
-}
-
-function stop() {
-  if (intervalId) {
-    clearInterval(intervalId)
-    intervalId = null
-  }
-  isRunning.value = false
-  isPaused.value = false
-  remainingMs.value = TIMER_DURATION_MS
-}
-
-// Cleanup
-onUnmounted(() => {
-  if (intervalId) clearInterval(intervalId)
 })
 </script>
 
